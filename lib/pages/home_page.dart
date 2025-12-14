@@ -48,10 +48,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     try {
       final organiser = ref.read(imageOrganiserServiceProvider);
       await organiser.organise(sourceDir, targetDir);
+
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Pictures organised successfully!')),
       );
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('An error occurred: $e')),
       );
@@ -120,7 +123,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(4),
-                          ),
+                          ), 
                           child: FileListView(directoryPath: sourceDir),
                         ),
                       ),
@@ -148,7 +151,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
           if (_isProcessing)
             Container(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withAlpha(128),
               child: const Center(
                 child: CircularProgressIndicator(),
               ),

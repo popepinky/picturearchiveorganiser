@@ -208,3 +208,9 @@ const String homePageWelcomeMessage = 'Welcome to your new macOS app!';
 Import `string_constants.dart` into your widget files and use the constants instead of hardcoded strings. This is demonstrated in the `main.dart` and `home_page.dart` examples in the sections above.
 
 This setup provides a solid foundation for your new project, following the same patterns as `multiusetool`. You can now add more complex providers and routes as your application grows.
+
+## 8. Style and Linting Notes
+
+### 8.1. Color Opacity
+
+The `withOpacity` method on `Color` is deprecated. Use `withAlpha` instead for better performance and to avoid precision loss. For example, instead of `Colors.black.withOpacity(0.5)`, use `Colors.black.withAlpha(128)`.
