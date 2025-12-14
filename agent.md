@@ -91,7 +91,7 @@ To make providers available throughout your app, wrap the root widget in a `Prov
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.d';
 import 'package:my_new_app/providers/router_provider.dart';
 import 'string_constants.dart';
 
@@ -214,3 +214,20 @@ This setup provides a solid foundation for your new project, following the same 
 ### 8.1. Color Opacity
 
 The `withOpacity` method on `Color` is deprecated. Use `withAlpha` instead for better performance and to avoid precision loss. For example, instead of `Colors.black.withOpacity(0.5)`, use `Colors.black.withAlpha(128)`.
+
+### 8.2. Using BuildContext Across Async Gaps
+
+To avoid crashes, do not use a `BuildContext` across an asynchronous gap. This is a common source of errors and is caught by the `use_build_context_synchronously` lint. Before using the context after an `await`, check if the widget is still in the widget tree by checking the `mounted` property.
+
+**Incorrect:**
+```dart
+await someAsyncOperation();
+ScaffoldMessenger.of(context).showSnackBar(...);
+```
+
+**Correct:**
+```dart
+await someAsyncOperation();
+if (!mounted) return;
+ScaffoldMessenger.of(context).showSnackBar(...);
+```
