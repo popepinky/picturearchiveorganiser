@@ -46,3 +46,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+ # Generated files
+ .metadata
+ android/
+ ios/
+ macos/
+​
+
+ # Ignore generated Podfile and Podfile.lock
+ /ios/Podfile
+ /ios/Podfile.lock
+ /macos/Podfile
+ /macos/Podfile.lock
