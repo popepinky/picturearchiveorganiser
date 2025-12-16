@@ -18,7 +18,24 @@ class MyApp extends ConsumerWidget {
       routerConfig: router,
       title: applicationTitle,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF7C3AED), // vivid violet
+          brightness: Brightness.light,
+        ).copyWith(
+          secondary: const Color(0xFFFF5BAA), // electric pink accent
+        ),
+        scaffoldBackgroundColor: const Color(0xFFF7F4FF),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF7C3AED),
+          brightness: Brightness.dark,
+        ).copyWith(
+          secondary: const Color(0xFFFF5BAA),
+        ),
+        scaffoldBackgroundColor: const Color(0xFF0D0620),
       ),
     );
   }
