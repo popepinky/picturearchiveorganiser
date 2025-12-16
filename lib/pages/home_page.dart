@@ -19,7 +19,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Future<void> _selectSourceDirectory(WidgetRef ref) async {
     // Ensure the window is focused before opening the picker
-    await Future.delayed(const Duration(milliseconds: 100));
+    // Wait for the next frame to ensure UI is ready, then additional delay for window focus
+    await Future.delayed(const Duration(milliseconds: 50));
+    await Future.delayed(const Duration(milliseconds: 150));
     String? result = await FilePicker.platform.getDirectoryPath();
     if (result != null) {
       ref.read(sourceDirectoryProvider.notifier).set(result);
@@ -28,7 +30,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Future<void> _selectTargetDirectory(WidgetRef ref) async {
     // Ensure the window is focused before opening the picker
-    await Future.delayed(const Duration(milliseconds: 100));
+    // Wait for the next frame to ensure UI is ready, then additional delay for window focus
+    await Future.delayed(const Duration(milliseconds: 50));
+    await Future.delayed(const Duration(milliseconds: 150));
     String? result = await FilePicker.platform.getDirectoryPath();
     if (result != null) {
       ref.read(targetDirectoryProvider.notifier).set(result);
