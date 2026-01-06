@@ -12,4 +12,11 @@ class MainFlutterWindow: NSWindow {
 
     super.awakeFromNib()
   }
+  
+  override func makeKeyAndOrderFront(_ sender: Any?) {
+    super.makeKeyAndOrderFront(sender)
+    // Ensure window becomes key/main when shown
+    self.makeKey()
+    NSApp.activate(ignoringOtherApps: true)
+  }
 }
