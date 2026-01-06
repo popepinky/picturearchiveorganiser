@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 class FileListView extends StatefulWidget {
   final String? directoryPath;
@@ -30,12 +29,6 @@ class _FileListViewState extends State<FileListView> {
         _refreshCounter++;
       });
     }
-  }
-
-  void _refreshDirectory() {
-    setState(() {
-      _refreshCounter++;
-    });
   }
 
   @override
@@ -157,7 +150,7 @@ class _FileListViewState extends State<FileListView> {
                           child: Text(
                             name,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
+                              color: Theme.of(context).textTheme.bodyMedium?.color?.withAlpha((0.6 * 255).round()),
                             ),
                           ),
                         ),

@@ -155,7 +155,7 @@ class ImageOrganiserService {
       final dateString = dateTag.toString();
 
       if (dateString.length >= 19) {
-        final parsableDateString = dateString.substring(0, 10).replaceAll(':', '-') + 'T' + dateString.substring(11, 19);
+        final parsableDateString = '${dateString.substring(0, 10).replaceAll(':', '-')}T${dateString.substring(11, 19)}';
         try {
           return DateTime.parse(parsableDateString);
         } catch (e) {
