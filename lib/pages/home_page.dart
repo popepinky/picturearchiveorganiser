@@ -41,7 +41,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     if (sourceDir == null || targetDir == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select source and target directories.')),
+        const SnackBar(
+          content: Text('Please select source and target directories.'),
+        ),
       );
       return;
     }
@@ -76,9 +78,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       setState(() {
         _refreshToken++; // still refresh to reflect any partial changes
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
@@ -89,17 +91,19 @@ class _HomePageState extends ConsumerState<HomePage> {
     final progress = ref.watch(processingProgressProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(homePageTitle),
-      ),
+      appBar: AppBar(title: const Text(homePageTitle)),
       body: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Theme.of(context).colorScheme.primary.withAlpha((0.9 * 255).round()),
-                  Theme.of(context).colorScheme.secondary.withAlpha((0.8 * 255).round()),
+                  Theme.of(
+                    context,
+                  ).colorScheme.primary.withAlpha((0.9 * 255).round()),
+                  Theme.of(
+                    context,
+                  ).colorScheme.secondary.withAlpha((0.8 * 255).round()),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -123,7 +127,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                               onTap: () => _selectSourceDirectory(ref),
                               child: AbsorbPointer(
                                 child: TextField(
-                                  controller: TextEditingController(text: sourceDir),
+                                  controller: TextEditingController(
+                                    text: sourceDir,
+                                  ),
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Source Directory',
@@ -138,7 +144,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                               onTap: () => _selectTargetDirectory(ref),
                               child: AbsorbPointer(
                                 child: TextField(
-                                  controller: TextEditingController(text: targetDir),
+                                  controller: TextEditingController(
+                                    text: targetDir,
+                                  ),
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Target Directory',
@@ -158,10 +166,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).colorScheme.surface,
                                   border: Border.all(
-                                    color: Theme.of(context).colorScheme.primary.withAlpha((0.3 * 255).round()),
+                                    color: Theme.of(context).colorScheme.primary
+                                        .withAlpha((0.3 * 255).round()),
                                   ),
                                   borderRadius: BorderRadius.circular(8),
-                                ), 
+                                ),
                                 child: KeyedSubtree(
                                   key: ValueKey('source_$_refreshToken'),
                                   child: FileListView(directoryPath: sourceDir),
@@ -169,7 +178,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                              ),
                               child: SizedBox(
                                 height: 48,
                                 width: 48,
@@ -178,7 +189,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     padding: EdgeInsets.zero,
                                     shape: const CircleBorder(),
                                   ),
-                                  onPressed: progress.isProcessing ? null : _organisePictures,
+                                  onPressed: progress.isProcessing
+                                      ? null
+                                      : _organisePictures,
                                   child: const Icon(Icons.arrow_forward),
                                 ),
                               ),
@@ -188,7 +201,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).colorScheme.surface,
                                   border: Border.all(
-                                    color: Theme.of(context).colorScheme.secondary.withAlpha((0.3 * 255).round()),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary
+                                        .withAlpha((0.3 * 255).round()),
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -206,7 +222,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                           margin: const EdgeInsets.only(top: 12),
                           padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Column(
@@ -214,7 +232,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                             children: [
                               LinearProgressIndicator(
                                 value: progress.progress,
-                                backgroundColor: Theme.of(context).colorScheme.surface,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.surface,
                                 valueColor: AlwaysStoppedAnimation<Color>(
                                   Theme.of(context).colorScheme.primary,
                                 ),
@@ -236,9 +256,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           if (progress.isProcessing)
             Container(
               color: Colors.black.withAlpha(128),
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: const Center(child: CircularProgressIndicator()),
             ),
         ],
       ),

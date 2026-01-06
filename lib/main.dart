@@ -19,12 +19,13 @@ class MyApp extends ConsumerWidget {
       title: applicationTitle,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF7C3AED), // vivid violet
-          brightness: Brightness.light,
-        ).copyWith(
-          secondary: const Color(0xFFFF5BAA), // electric pink accent
-        ),
+        colorScheme:
+            ColorScheme.fromSeed(
+              seedColor: const Color(0xFF7C3AED), // vivid violet
+              brightness: Brightness.light,
+            ).copyWith(
+              secondary: const Color(0xFFFF5BAA), // electric pink accent
+            ),
         scaffoldBackgroundColor: const Color(0xFFF7F4FF),
       ),
       darkTheme: ThemeData(
@@ -32,9 +33,7 @@ class MyApp extends ConsumerWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF7C3AED),
           brightness: Brightness.dark,
-        ).copyWith(
-          secondary: const Color(0xFFFF5BAA),
-        ),
+        ).copyWith(secondary: const Color(0xFFFF5BAA)),
         scaffoldBackgroundColor: const Color(0xFF0D0620),
       ),
     );

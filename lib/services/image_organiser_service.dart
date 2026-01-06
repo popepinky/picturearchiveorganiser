@@ -16,17 +16,21 @@ class ImageOrganiserService {
     if (!await sourceDir.exists()) {
       throw Exception('Source directory does not exist: $sourceDirPath');
     }
-    
+
     if (!await targetDir.exists()) {
       throw Exception('Target directory does not exist: $targetDirPath');
     }
 
-    debugPrint('Starting image organisation from $sourceDirPath to $targetDirPath');
+    debugPrint(
+      'Starting image organisation from $sourceDirPath to $targetDirPath',
+    );
 
     // First, count total images
     int totalImages = 0;
     await for (final file in sourceDir.list(recursive: true)) {
-      if (file is File && (p.extension(file.path).toLowerCase() == '.jpg' || p.extension(file.path).toLowerCase() == '.jpeg')) {
+      if (file is File &&
+          (p.extension(file.path).toLowerCase() == '.jpg' ||
+              p.extension(file.path).toLowerCase() == '.jpeg')) {
         totalImages++;
       }
     }
@@ -36,18 +40,24 @@ class ImageOrganiserService {
     if (totalImages == 0) {
       debugPrint('No images found in source directory');
       onProgress?.call(0, 0);
-      throw Exception('No images found in source directory. Only .jpg and .jpeg files are supported.');
+      throw Exception(
+        'No images found in source directory. Only .jpg and .jpeg files are supported.',
+      );
     }
 
     final Set<String> targetHashes = await _calculateTargetHashes(targetDir);
-    debugPrint('Found ${targetHashes.length} existing images in target directory');
+    debugPrint(
+      'Found ${targetHashes.length} existing images in target directory',
+    );
 
     int processedImages = 0;
     int copiedImages = 0;
     int skippedImages = 0;
-    
+
     await for (final file in sourceDir.list(recursive: true)) {
-      if (file is File && (p.extension(file.path).toLowerCase() == '.jpg' || p.extension(file.path).toLowerCase() == '.jpeg')) {
+      if (file is File &&
+          (p.extension(file.path).toLowerCase() == '.jpg' ||
+              p.extension(file.path).toLowerCase() == '.jpeg')) {
         try {
           final wasCopied = await _processImage(file, targetDir, targetHashes);
           if (wasCopied) {
@@ -65,13 +75,17 @@ class ImageOrganiserService {
       }
     }
 
-    debugPrint('Organisation complete: $copiedImages copied, $skippedImages skipped');
+    debugPrint(
+      'Organisation complete: $copiedImages copied, $skippedImages skipped',
+    );
   }
 
   Future<Set<String>> _calculateTargetHashes(Directory targetDir) async {
     final Set<String> hashes = {};
     await for (final file in targetDir.list(recursive: true)) {
-      if (file is File && (p.extension(file.path).toLowerCase() == '.jpg' || p.extension(file.path).toLowerCase() == '.jpeg')) {
+      if (file is File &&
+          (p.extension(file.path).toLowerCase() == '.jpg' ||
+              p.extension(file.path).toLowerCase() == '.jpeg')) {
         final bytes = await file.readAsBytes();
         hashes.add(sha256.convert(bytes).toString());
       }
@@ -79,7 +93,11 @@ class ImageOrganiserService {
     return hashes;
   }
 
-  Future<bool> _processImage(File file, Directory targetDir, Set<String> targetHashes) async {
+  Future<bool> _processImage(
+    File file,
+    Directory targetDir,
+    Set<String> targetHashes,
+  ) async {
     try {
       final bytes = await file.readAsBytes();
       final hash = sha256.convert(bytes).toString();
@@ -113,7 +131,9 @@ class ImageOrganiserService {
         return true;
       } else {
         // Log EXIF data only if date is not found, then move to NoDate.
-        debugPrint('Could not find a date for ${file.path}. Moving to NoDate folder.');
+        debugPrint(
+          'Could not find a date for ${file.path}. Moving to NoDate folder.',
+        );
         debugPrint('--- EXIF Data for ${p.basename(file.path)} ---');
         if (tags.isEmpty) {
           debugPrint('  -> No EXIF data found.');
@@ -155,7 +175,8 @@ class ImageOrganiserService {
       final dateString = dateTag.toString();
 
       if (dateString.length >= 19) {
-        final parsableDateString = '${dateString.substring(0, 10).replaceAll(':', '-')}T${dateString.substring(11, 19)}';
+        final parsableDateString =
+            '${dateString.substring(0, 10).replaceAll(':', '-')}T${dateString.substring(11, 19)}';
         try {
           return DateTime.parse(parsableDateString);
         } catch (e) {

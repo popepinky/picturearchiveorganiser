@@ -6,10 +6,10 @@ part 'progress_provider.g.dart';
 class ProcessingProgress extends _$ProcessingProgress {
   @override
   ProcessingProgressState build() => const ProcessingProgressState(
-        total: 0,
-        processed: 0,
-        isProcessing: false,
-      );
+    total: 0,
+    processed: 0,
+    isProcessing: false,
+  );
 
   void start(int total) {
     state = ProcessingProgressState(
@@ -62,4 +62,3 @@ class ProcessingProgressState {
   int get remaining => total - processed;
   double get progress => total > 0 ? processed / total : 0.0;
 }
-

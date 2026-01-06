@@ -39,10 +39,10 @@ class _FileListViewState extends State<FileListView> {
 
     // Force rebuild when refresh counter changes
     final directory = Directory(_currentPath!);
-    final entries = directory.existsSync() 
-        ? directory.listSync() 
+    final entries = directory.existsSync()
+        ? directory.listSync()
         : <FileSystemEntity>[];
-    
+
     // Use refresh counter to force ListView rebuild
     final refreshKey = ValueKey('$_currentPath$_refreshCounter');
 
@@ -86,9 +86,7 @@ class _FileListViewState extends State<FileListView> {
         ),
         const Divider(height: 1),
         if (entries.isEmpty)
-          const Expanded(
-            child: Center(child: Text('Directory is empty')),
-          )
+          const Expanded(child: Center(child: Text('Directory is empty')))
         else
           Expanded(
             child: ListView.builder(
@@ -98,7 +96,7 @@ class _FileListViewState extends State<FileListView> {
                 final entity = entries[index];
                 final name = entity.path.split('/').last;
                 final isDir = entity is Directory;
-                
+
                 if (isDir) {
                   return Material(
                     color: Colors.transparent,
@@ -111,7 +109,10 @@ class _FileListViewState extends State<FileListView> {
                         });
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
                         child: Row(
                           children: [
                             Icon(
@@ -138,20 +139,25 @@ class _FileListViewState extends State<FileListView> {
                   );
                 } else {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.image,
-                          size: 24,
-                        ),
+                        const Icon(Icons.image, size: 24),
                         const SizedBox(width: 16),
                         Expanded(
                           child: Text(
                             name,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).textTheme.bodyMedium?.color?.withAlpha((0.6 * 255).round()),
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color
+                                      ?.withAlpha((0.6 * 255).round()),
+                                ),
                           ),
                         ),
                       ],
